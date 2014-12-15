@@ -18,9 +18,9 @@
 #' @note 9 December 2014
 #' @examples
 #' net <- network(10,'keeling',1,0.5,0.5,4,0.9)
-network <- function(n,method,percent=1,alpha=0.5,delta=0.5,Fn=1,f=1){
+network <- function(n,method,prob=1,alpha=0.5,delta=0.5,Fn=1,f=1){
   if (method=='erdos'){
-    net <- erdos(n,percent)
+    net <- erdos(n,prob)
   }
   else if (method=='waxman'){
     net <- waxman(n,alpha,delta)

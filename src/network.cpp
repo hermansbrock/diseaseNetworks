@@ -19,6 +19,45 @@ double edgeProb(double a, double d, double L, double dist){
 }
 
 // [[Rcpp::export]]
+List erdos(int n,double prob){
+  NumericMatrix x(n,2);
+  x(_,0) = runif(n,0,1);
+  x(_,1) = runif(n,0,1);
+
+  IntegerVector node_states(n);
+  NumericVector p=runif(1,0,n);
+  int p2=p(0);
+  node_states(p2-1)=1;
+  
+  
+  int Nedges = n * (n-1) / 2;  
+  NumericMatrix edges(Nedges,6);
+  edges(_,0) = runif(Nedges,0,1);
+  edges(_,1) = edges(_,0);
+  edges(_,2) = edges(_,0);
+  NumericMatrix A(n,n);
+  
+  int row=0;
+  
+  for (int i=0;i<n;i++){
+    for (int j=(i+1);j<n;j++){
+      if (edges(row,0)<prob){
+        edges(row,3) = 1;
+        A(i,j)=1;
+        A(j,i)=1;
+      } else {
+        edges(row,3) = 0;
+      }
+      edges(row,4) = i+1;
+      edges(row,5) = j+1;
+      row++;
+    }
+  }
+  
+  return List::create(_["nodes"] = x, _["edges"] = edges, _["A"]=A,_["node_states"] = node_states);
+}
+
+// [[Rcpp::export]]
 List waxman(int n,double a, double d) {
   NumericMatrix x(n,2);
   x(_,0) = runif(n,0,1);

@@ -5,6 +5,22 @@
 
 using namespace Rcpp;
 
+// erdos
+List erdos(int n, double prob);
+RcppExport SEXP diseaseNetworks_erdos(SEXP nSEXP, SEXP probSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< int >::type n(nSEXP );
+        Rcpp::traits::input_parameter< double >::type prob(probSEXP );
+        List __result = erdos(n, prob);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
 // waxman
 List waxman(int n, double a, double d);
 RcppExport SEXP diseaseNetworks_waxman(SEXP nSEXP, SEXP aSEXP, SEXP dSEXP) {
