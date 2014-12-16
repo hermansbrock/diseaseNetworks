@@ -20,7 +20,7 @@ Takes a network structure and plots the network. Also plots subgraphs if given
 29 August 2014
 }
 \examples{
-network <- networkSimulate(0.1,10)
+network <- network(10,0.5)
 plot(network)
 }
 \author{

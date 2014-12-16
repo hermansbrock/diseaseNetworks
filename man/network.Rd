@@ -3,8 +3,7 @@
 \alias{network}
 \title{Network simulation code}
 \usage{
-network(n, method, percent = 1, alpha = 0.5, delta = 0.5, Fn = 1,
-  f = 1)
+network(n, method, prob = 1, alpha = 0.5, delta = 0.5, Fn = 1, f = 1)
 }
 \arguments{
 \item{n}{Number of nodes.}
