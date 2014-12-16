@@ -20,7 +20,24 @@
 #' net <- network(10,'keeling',1,0.5,0.5,4,0.9)
 network <- function(n,method,prob=1,alpha=0.5,delta=0.5,Fn=1,f=1){
   if (method=='erdos'){
-    net <- erdos(n,prob)
+    if (prob==1){
+      net <- list()
+      net$nodes <- matrix(runif(2*n),ncol=2)
+      edges <- matrix(rep(0,2*n*(n-1)),ncol=2)
+      row=1
+      for (i in 0:(n-2)){
+        for (j in (i+1):(n-1)){
+          edges[row,] <- c(i,j)
+          edges[row+1,] <- c(j,i)
+          row <- row+2
+        }
+      }
+      net$edges <- cbind(edges,1)
+      node_states <- rep(0,n)
+      node_states[1]=1
+      net$node_states <- node_states
+    }
+    else {net <- erdos(n,prob)}
   }
   else if (method=='waxman'){
     net <- waxman(n,alpha,delta)
@@ -32,6 +49,7 @@ network <- function(n,method,prob=1,alpha=0.5,delta=0.5,Fn=1,f=1){
     stop("Invalid method: Must be 'erdos', 'waxman' or 'keeling'")
   }
   
+  if (prob!=1){
   edges2 <- matrix(c(0,0,0),ncol=3)
   for (i in 1:nrow(net$edges)){
     if (net$edges[i,4]==1){
@@ -39,9 +57,10 @@ network <- function(n,method,prob=1,alpha=0.5,delta=0.5,Fn=1,f=1){
       edges2 <- rbind(edges2,c(net$edges[i,6]-1,net$edges[i,5]-1,0))
     }
   }
-  
   edges2 <- edges2[-1,]
   net$edges <- edges2
+  }
+  
   class(net) = "network"
   return(net)
 }
