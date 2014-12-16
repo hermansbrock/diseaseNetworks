@@ -112,8 +112,8 @@ NumericMatrix apply_cluster(NumericMatrix nodes, NumericMatrix F, double f){
       double dist = getDist(nodes(i,_),F(j,_));
       if(dist < min_dist){
         min_dist = dist;
-        double xn = F(j,0) + f * (F(j,0) - nodes(i,0));
-        double yn = F(j,1) + f * (F(j,1) - nodes(i,1));
+        double xn = F(j,0) - (1-f) * (F(j,0) - nodes(i,0));
+        double yn = F(j,1) - (1-f) * (F(j,1) - nodes(i,1));
         adjusted_nodes(i,0) = xn;
         adjusted_nodes(i,1) = yn;
       }
